@@ -25,3 +25,13 @@ navLocationToRoute path =
 
             _ ->
                 Nothing
+
+
+urlFor : Route -> String
+urlFor route =
+    case route of
+        Home ->
+            "#/"
+
+        Topics ->
+            "#/topics"

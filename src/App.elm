@@ -4,6 +4,7 @@ import Html exposing (Html, text, div, nav, ul, li, a)
 import Html.Attributes exposing (src, href)
 import Navigation
 import Route
+import Page.Topics as Topics
 
 
 ---- MODEL ----
@@ -60,7 +61,7 @@ view model =
                     viewHome
 
                 Just (Route.Topics) ->
-                    viewTopics
+                    Topics.view
 
                 Nothing ->
                     text "Not found!"
@@ -76,19 +77,24 @@ viewHome =
     text "Home page"
 
 
-viewTopics : Html Msg
-viewTopics =
-    text "Topics"
-
-
 viewNavigation : Model -> Html Msg
 viewNavigation model =
     nav []
         [ ul []
-            [ li [] [ a [ href "#" ] [ text "Home" ] ]
-            , li [] [ a [ href "#" ] [ text "Topics" ] ]
-            ]
+            (List.map (\item -> li [] [ link item ]) links)
         ]
+
+
+links : List ( Route.Route, String )
+links =
+    [ ( Route.Home, "Home" )
+    , ( Route.Topics, "Topics" )
+    ]
+
+
+link : ( Route.Route, String ) -> Html Msg
+link ( route, label ) =
+    a [ Route.urlFor route |> href ] [ text label ]
 
 
 
