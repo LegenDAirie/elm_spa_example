@@ -6,6 +6,7 @@ import Navigation
 type Route
     = Home
     | Topics
+    | Topic String
 
 
 navLocationToRoute : Navigation.Location -> Maybe Route
@@ -17,6 +18,9 @@ navLocationToRoute path =
                 |> List.filter (\segment -> segment /= "" && segment /= "#")
     in
         case segments of
+            [ "topics", slug ] ->
+                Just (Topic slug)
+
             [ "topics" ] ->
                 Just Topics
 
@@ -35,3 +39,6 @@ urlFor route =
 
         Topics ->
             "#/topics"
+
+        Topic slug ->
+            "#/topics/" ++ slug

@@ -5,6 +5,7 @@ import Html.Attributes exposing (src, href)
 import Navigation
 import Route
 import Page.Topics as Topics
+import Helpers exposing (link)
 
 
 ---- MODEL ----
@@ -61,7 +62,10 @@ view model =
                     viewHome
 
                 Just (Route.Topics) ->
-                    Topics.view
+                    Topics.view Topics.fakeTopics
+
+                Just (Route.Topic slug) ->
+                    Topics.viewTopic slug Topics.fakeTopics
 
                 Nothing ->
                     text "Not found!"
@@ -90,11 +94,6 @@ links =
     [ ( Route.Home, "Home" )
     , ( Route.Topics, "Topics" )
     ]
-
-
-link : ( Route.Route, String ) -> Html Msg
-link ( route, label ) =
-    a [ Route.urlFor route |> href ] [ text label ]
 
 
 
